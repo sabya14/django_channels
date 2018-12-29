@@ -8,7 +8,7 @@
         <h1>{{ msg }}</h1>
         <div>
             <ul v-for="file in files">
-                <li>{{file.name}}</li>
+                <li>{{file.name}}, Active: {{file.active}}</li>
             </ul>
         </div>
     </div>
@@ -41,9 +41,6 @@
                     'contentType': false
                 }).then(data => {
                     this.getFilesList()
-                    this.notificationSocket.send(JSON.stringify({
-                        'message': message
-                    }));
                 }).catch(error => {
                     console.log("Error", error)
                 })

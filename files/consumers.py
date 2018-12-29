@@ -1,7 +1,9 @@
+import json
+import time
+
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-import json
-
+from .models import File
 
 class FileConsumer(WebsocketConsumer):
 	def connect(self):
@@ -26,7 +28,6 @@ class FileConsumer(WebsocketConsumer):
 	def receive(self, text_data):
 		text_data_json = json.loads(text_data)
 		message = text_data_json['message']
-
 		# Send message to room group
 		async_to_sync(self.channel_layer.group_send)(
 			self.room_group_name,
@@ -38,8 +39,14 @@ class FileConsumer(WebsocketConsumer):
 
 	# Receive message from room group
 	def chat_message(self, event):
-		print("MESSAGE HERE", event)
 		message = event['content']['message']
+		id = event['id']
+		print("EVENT HERE")
+		time.sleep(5)
+		print("SLEEP OVER HERE")
+		obj = File.objects.get(id=id)
+		obj.active = True
+		obj.save()
 		# Send message to WebSocket
 		self.send(text_data=json.dumps({
 			'message': message

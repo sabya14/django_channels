@@ -18,6 +18,7 @@ class FileSerializer(serializers.ModelSerializer):
 		# We identify the layer with the id of the group name, and fire an event to it
 		async_to_sync(layer.group_send)('file_list', {
 			'type': 'chat_message',
+			'id': obj.id,
 			'content': {'message': 'File Uploaded'}
 		})
 		return obj

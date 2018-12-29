@@ -23,6 +23,7 @@
             this.notificationSocket = new WebSocket(
                 'ws://' + 'localhost:8000' + '/file_app/file/' + 'file_list' + '/');
             this.notificationSocket.onmessage = function (e) {
+                console.log("MESSAGE RECIEVED", e)
                 var data = JSON.parse(e.data);
                 var message = data['message'];
                 window.alert("Notification " + message)
