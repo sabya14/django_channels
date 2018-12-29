@@ -35,19 +35,22 @@
                 formData.append("name", file.name);
                 formData.append("file", file);
                 this.ajaxPromise({
-                    'url': "ws://localhost:8000/files/",
+                    'url': "http://localhost:8000/files/",
                     'type': "POST",
                     'data': formData,
                     'contentType': false
                 }).then(data => {
                     this.getFilesList()
+                    this.notificationSocket.send(JSON.stringify({
+                        'message': message
+                    }));
                 }).catch(error => {
                     console.log("Error", error)
                 })
             },
             getFilesList: function () {
                 this.ajaxPromise({
-                    'url': "ws://localhost:8000/files/",
+                    'url': "http://localhost:8000/files/",
                     'type': "GET"
                 }).then(data => {
                     console.log("Response", data)

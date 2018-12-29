@@ -13,7 +13,6 @@ class FileConsumer(WebsocketConsumer):
 			self.room_group_name,
 			self.channel_name
 		)
-
 		self.accept()
 
 	def disconnect(self, close_code):
@@ -39,8 +38,8 @@ class FileConsumer(WebsocketConsumer):
 
 	# Receive message from room group
 	def chat_message(self, event):
-		message = event['message']
-
+		print("MESSAGE HERE", event)
+		message = event['content']['message']
 		# Send message to WebSocket
 		self.send(text_data=json.dumps({
 			'message': message
