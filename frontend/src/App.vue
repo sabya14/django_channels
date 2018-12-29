@@ -19,6 +19,7 @@
 
         },
         beforeMount: function () {
+            // Create the default websocket, very bare bones now, will change later
             this.notificationSocket = new WebSocket(
                 'ws://' + 'localhost:8000' + '/file_app/file/' + 'file_list' + '/');
             this.notificationSocket.onmessage = function (e) {
